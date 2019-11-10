@@ -56,12 +56,17 @@ class Pomp_Manager:
         msg = msg + "n"
         msg = msg.encode()
         self.pomp_serial.send_msg(msg)
+        while True:
+            rep = self.pomp_serial.read_reply()
+            if rep == "Done.":
+                break
+
 
     def test(self, v):
         if v is 0:
-            self.pomp_serial.send_msg(b"00000000")
+            msg = "00000000"
         elif v is 9:
-            self.pomp_serial.send_msg(b"11111111")
+            msg = "11111111"
         else:
             sig = ""
             for i in range(v):
@@ -69,12 +74,8 @@ class Pomp_Manager:
             sig += "1"
             for i in range(8-v+1):
                 sig += "0"
-            self.pomp_serial.send_msg(sig)
-        while True:
-            rep = self.pomp_serial.read_reply()
-            if rep == "Done.":
-                break
-
+        self.handle(msg)
+        
 
     def close(self):
         self.pomp_serial.close()
