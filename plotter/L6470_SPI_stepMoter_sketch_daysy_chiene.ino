@@ -15,7 +15,7 @@ SS - CS共通
 #define PIN_BUSY 9
 #define PIN_BUSY2 8
 
-void motorsetup()
+void motorsetup1()
 {
   delay(1000);
   pinMode(PIN_SPI_MOSI, OUTPUT);
@@ -27,7 +27,9 @@ void motorsetup()
   SPI.begin();
   SPI.setDataMode(SPI_MODE3);
   SPI.setBitOrder(MSBFIRST);
-  Serial.begin(38400);
+}
+
+void motorsetup2(){
   digitalWrite(PIN_SPI_SS, HIGH);
 
   L6470_resetdevice();  //1台目のL6470リセット
@@ -43,46 +45,51 @@ void motorsetup()
   delay(2000);
 }
 
-//
+int calc_step(int centimeter) {
+  int step = int(800 * centimeter / 10);
+  return step;
+}
+
+int one_step = int(800 * 15 / 30);
+
+// 800 -> 30cm
 ////1台目正転
 void normal_rotate_motor1(){
-  L6470_move(1,800); //1台目を正転方向に800ステップ　(現在1/4マイクロステップ設定なので、フルステップの200ステップ分になる)
-  L6470_busydelay(1000); //1台目の動作終了から１秒待つ
+  L6470_move(1,one_step); //1台目を正転方向に800ステップ　(現在1/4マイクロステップ設定なので、フルステップの200ステップ分になる)
 }
 
 ////2台目逆転
 void reverse_motor1() {
-  L6470_move(0, 800);
-  L6470_busydelay(1000);
+  L6470_move(0, one_step);
 }
 
 ////２台目正転
 void normal_rotate_motor2(){
-  L6470_move2(1,800);//2台目を正転方向に800ステップ　()
-  L6470_busydelay2(1000);//2台目の動作終了から１秒待つ
+  L6470_move2(1, one_step);//2台目を正転方向に800ステップ　()
 }
 
 void reverse_motor2() {
-  L6470_move2(0, 800);
-  L6470_busydelay2(300);
+  L6470_move2(0, one_step);
 }
 
 ////同時正転
 void normal_rotate_both() {
-  for(int i=0;i<3;i++){
-    L6470_move(1,800);
-    L6470_move2(1,800);
-    L6470_busydelay(300);
-  }
+  L6470_move(1,one_step);
+  L6470_move2(1,one_step);
 }
 
 ////同時逆転
 void reverse_both() {
-  for(int i=0;i<3;i++){
-    L6470_move(0,800);
-    L6470_move2(0,800);
-    L6470_busydelay(300);
-  }
+  L6470_move(0,one_step);
+  L6470_move2(0,one_step);
+}
+
+void delay1() {
+  L6470_busydelay(300);
+}
+
+void delay2() {
+  L6470_busydelay2(300);
 }
 
 ////同時　順次　正逆転
@@ -181,13 +188,13 @@ void fulash()
   long d = L6470_getparam_speed2();
   char str[15];
   snprintf(str, sizeof(str), "1pos=0x%6.6X ", a);
-  Serial.print(str);
+  // Serial.print(str);
   snprintf(str, sizeof(str), "1spd=0x%5.5X ", b);
-  Serial.print(str);
+  // Serial.print(str);
   snprintf(str, sizeof(str), "2pos=0x%6.6X ", c);
-  Serial.print(str);
+  // Serial.print(str);
   snprintf(str, sizeof(str), "2spd=0x%5.5X ", d);
-  Serial.println(str);
+  // Serial.println(str);
 
   /* Serial.print("0x");
   Serial.print( L6470_getparam_abspos(),HEX);
