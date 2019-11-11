@@ -68,7 +68,7 @@ void main_work() {
     recv_str = Serial.readStringUntil("n");
     Serial.println(recv_str);
     move(recv_str);
-    delay(100);
+    delay(90);
     move(stop_signal);
     // recv_signals.Push(recv_str);
     // add_offsignal();
