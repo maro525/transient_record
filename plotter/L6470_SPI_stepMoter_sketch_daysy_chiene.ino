@@ -50,7 +50,8 @@ int calc_step(int centimeter) {
   return step;
 }
 
-int one_step = int(800 * 15 / 30);
+// 30cm 800 step
+int one_step = int(800 * 30 / 30);
 
 // 800 -> 30cm
 ////1台目正転

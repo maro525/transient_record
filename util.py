@@ -31,6 +31,7 @@ class Char_Getter:
         url = self.url + c
         array = urllib.request.urlopen(url).read()
         a = array.decode()
+        a = self.reshape(a)
         return a
 
     # TODO
@@ -38,4 +39,6 @@ class Char_Getter:
         b = ""
         for i in range(8):
             for j in range(8):
-                tmp = a[i*8+j]
+                tmp = a[j*8+i]
+                b += tmp
+        return b

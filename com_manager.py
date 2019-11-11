@@ -63,17 +63,17 @@ class Pomp_Manager:
 
 
     def test(self, v):
-        if v is 0:
+        if v is 8:
             msg = "00000000"
         elif v is 9:
             msg = "11111111"
         else:
-            sig = ""
+            msg = ""
             for i in range(v):
-                sig += "0"
-            sig += "1"
+                msg += "0"
+            msg += "1"
             for i in range(8-v+1):
-                sig += "0"
+                msg += "0"
         self.handle(msg)
         
 

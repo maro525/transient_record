@@ -45,6 +45,12 @@ class Transient_Record:
         for i in range(times):
             self.cc.pomp.test(v)
 
+    def all_check(self, v, times):
+        for i in range(times):
+            self.cc.pomp.test(v)
+            self.cc.plotter.test(1, 1)
+        self.plotter_move(0, times)
+
     def finish(self):
         self.cc.close()
 
@@ -52,8 +58,8 @@ tr = Transient_Record()
 
 # tr.main("Good Morning") # 文章を書く
 tr.char_check("A") # 文字チェク。 一文字かく
-# tr.plotter_move(0, 8) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
-# tr.pomp_check(9, 10) # n番目のポンプをON。 0にしたときは全部OFF 9は全部ON
+# tr.plotter_move(0, 3) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
+# tr.pomp_check(1, 10) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON
 
 
 tr.finish()
