@@ -1,6 +1,7 @@
 import serial
 import time
 import urllib.request
+import urllib.parse
 
 class Serial_Controller:
     def __init__(self, port, baudrate):
@@ -28,7 +29,8 @@ class Char_Getter:
         self.url = "https://arcane-bayou-55620.herokuapp.com/getArray/"
 
     def get_charArray(self, c):
-        url = self.url + c
+        char = urllib.parse.quote(c) 
+        url = self.url + char
         array = urllib.request.urlopen(url).read()
         a = array.decode()
         a = self.reshape(a)
