@@ -1,7 +1,7 @@
 from util import Serial_Controller
 
-PORT_POMP = "COM6"
-PORT_PLOTTER = "COM7"
+PORT_POMP = "/dev/ttyUSB0"
+PORT_PLOTTER = "/dev/ttyACM0"
 BAUDRATE = 38400
 
 
@@ -25,6 +25,7 @@ class Plotter_Manager:
     
     def test(self, dir, times):
         for i in range(times):
+            print("--- {} / {}".format(i, times))
             self.move(dir)
 
     def close(self):
@@ -36,6 +37,7 @@ class Pomp_Manager:
         self.pomp_serial = Serial_Controller(PORT_POMP, BAUDRATE)
 
     def handle(self, msg):
+        msg = msg[::-1]
         msg = msg + "n"
         msg = msg.encode()
         self.pomp_serial.send_msg(msg)

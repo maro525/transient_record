@@ -35,7 +35,7 @@ class CharCalculatior:
                     indx = 0
         return splited
 
-    def move_data(self, split_data, direction):
+    def make_move_data(self, split_data, direction):
         mds = []
         for i in range(self.bitlen):
             md = []

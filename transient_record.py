@@ -13,16 +13,26 @@ class Transient_Record:
     def main(self):
         while True:
             sentence = self.tg.get_random_word()
-            self.cc.write_sentence(sentence, self.round_times)
-            time.sleep(self.resting_duration)
+            starttime = time.time()
+            # self.cc.write_sentence(sentence, self.round_times)
+            self.sentence_check(sentence)
+            duration = time.time() - starttime
+            if duration < self.resting_duration:
+                time.sleep(self.resting_duration-duration)
 
     def sentence_check(self, sentence):
         self.cc.write_sentence(sentence)
+        i = 0
+        for c in sentence:
+            self.char_check(c)
+            i += 1
+        for i in range(i):
+            self.plotter_move(1, 8*i)
 
     def char_check(self, c):
         # self.pomp_check(9, 1)
         self.cc.write_char(c)
-        self.plotter_move(0, 8)
+        # self.plotter_move(0, 8)
 
     def plotter_move(self, dir, times):
         self.cc.plotter.test(dir, times)
@@ -44,8 +54,8 @@ class Transient_Record:
 if __name__ == '__main__':
     tr = Transient_Record()
 
-    # tr.main() 
-    tr.sentence_check("GOOD DAY")
+    tr.main() 
+    # tr.sentence_check("GOOD DAY")
     # tr.char_check("あ") # 文字チェク。 一文字かく
     # tr.plotter_move(1, 10) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
     # tr.pomp_check(9, 10) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
