@@ -36,7 +36,6 @@ class Char_Getter:
         a = self.reshape(a)
         return a
 
-    # TODO
     def reshape(self, a):
         b = ""
         for i in range(8):

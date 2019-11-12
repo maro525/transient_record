@@ -1,43 +1,20 @@
-from com_manager import Plotter_Manager, Pomp_Manager 
-from util import Char_Getter
 import time
 from trend_getter import TrendGetter
-
-class Char_Controller:
-    def __init__(self):
-        self.char_getter = Char_Getter()
-        self.plotter = Plotter_Manager()
-        self.pomp = Pomp_Manager()
-
-    def write_char(self, c):
-        array = self.char_getter.get_charArray(c)
-        for i in range(8):
-            print("Char:{} - Array:{}".format(c, i))
-            self.plotter.update()
-            self.plotter.move()
-            msg = array[i*8: i*8+7]
-            self.pomp.handle(msg)
-        print("Wrote", c)
-
-    def write_sentence(self, s):
-        print("Write Sentence", s)
-        for c in s:
-            self.write_char(c)
-
-    def close(self):
-        self.pomp.close()
-        self.plotter.close()
-
+from char_controller import Char_Controller
 
 
 class Transient_Record:
     def __init__(self):
         self.cc = Char_Controller()
         self.tg = TrendGetter()
+        self.resting_duration = 300
+        self.round_times = 4
 
     def main(self):
-        sentence = self.tg.get_random_word()
-        self.cc.write_sentence(sentence)
+        while True:
+            sentence = self.tg.get_random_word()
+            self.cc.write_sentence(sentence, self.round_times)
+            time.sleep(self.resting_duration)
 
     def sentence_check(self, sentence):
         self.cc.write_sentence(sentence)

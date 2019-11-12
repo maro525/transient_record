@@ -7,30 +7,14 @@ BAUDRATE = 38400
 
 class Plotter_Manager:
     def __init__(self):
-        self.max_len = 10
-        self.plotter_pos = 0
-        self.dir = 1
         self.plotter_serial = Serial_Controller(PORT_PLOTTER, BAUDRATE)
 
-    # update plotter direction
-    def update(self):
-        if self.dir is 1:
-            self.plotter_pos += 1
-            if self.plotter_pos > self.max_len:
-                self.plotter_pos = self.max_len
-                self.dir = 0
-        elif self.dir is 0:
-            self.plotter_pos -= 1
-            if self.plotter_pos < 10:
-                self.plotter_pos = 0
-                self.dir = 1
-
-    def move(self):
-        if self.dir is 1:
+    def move(self, dir):
+        if dir is 1:
             self.plotter_serial.send_msg(b"a.")
-        elif self.dir is 0:
+        elif dir is 0:
             self.plotter_serial.send_msg(b"b.")
-        elif self.dir is -1:
+        elif dir is -1:
             self.plotter_serial.send_msg(b"h.")
         rep = ""
         while True:
@@ -40,9 +24,8 @@ class Plotter_Manager:
         # print("plotter move succeeded")
     
     def test(self, dir, times):
-        self.dir = dir
         for i in range(times):
-            self.move()
+            self.move(dir)
 
     def close(self):
         self.plotter_serial.close()
