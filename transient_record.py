@@ -1,12 +1,13 @@
 from com_manager import Plotter_Manager, Pomp_Manager 
 from util import Char_Getter
 import time
+from trend_getter import TrendGetter
 
 class Char_Controller:
     def __init__(self):
         self.char_getter = Char_Getter()
-        # self.plotter = Plotter_Manager()
-        # self.pomp = Pomp_Manager()
+        self.plotter = Plotter_Manager()
+        self.pomp = Pomp_Manager()
 
     def write_char(self, c):
         array = self.char_getter.get_charArray(c)
@@ -19,6 +20,7 @@ class Char_Controller:
         print("Wrote", c)
 
     def write_sentence(self, s):
+        print("Write Sentence", s)
         for c in s:
             self.write_char(c)
 
@@ -31,8 +33,13 @@ class Char_Controller:
 class Transient_Record:
     def __init__(self):
         self.cc = Char_Controller()
+        self.tg = TrendGetter()
 
-    def main(self, sentence):
+    def main(self):
+        sentence = self.tg.get_random_word()
+        self.cc.write_sentence(sentence)
+
+    def sentence_check(self, sentence):
         self.cc.write_sentence(sentence)
 
     def char_check(self, c):
@@ -56,15 +63,18 @@ class Transient_Record:
     def finish(self):
         self.cc.close()
 
-tr = Transient_Record()
 
-# tr.main("Good Morning") # 文章を書く
-tr.char_check("あ") # 文字チェク。 一文字かく
-# tr.plotter_move(1, 10) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
-# tr.pomp_check(9, 10) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
-# tr.all_check(2, 10)
+if __name__ == '__main__':
+    tr = Transient_Record()
 
-# for i in range(50):
-    # tr.char_check("B")
+    # tr.main() 
+    tr.sentence_check("GOOD DAY")
+    # tr.char_check("あ") # 文字チェク。 一文字かく
+    # tr.plotter_move(1, 10) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
+    # tr.pomp_check(9, 10) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
+    # tr.all_check(2, 10)
 
-tr.finish()
+    # for i in range(50):
+        # tr.char_check("B")
+
+    tr.finish()
