@@ -10,7 +10,7 @@ import pandas, numpy, random, requests
 class TrendGetter:
     def __init__(self):
         #MeCab設定
-        tagger_neolog = MeCab.Tagger("-Ochasen -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
+        tagger_neolog = MeCab.Tagger("-Ochasen -d /usr/lib/mecab/dic/mecab-ipadic-neologd")
         self.tagger = MeCab.Tagger("-Ochasen")
 
         #kakasi設定
