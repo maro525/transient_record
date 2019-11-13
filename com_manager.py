@@ -17,9 +17,13 @@ class Plotter_Manager:
         elif dir is -1:
             self.plotter_serial.send_msg(b"h.")
         rep = ""
+        ww = 0
         while True:
+            ww += 1
             rep = self.plotter_serial.read_reply()
             if rep == "Done.":
+                break
+            if ww > 5:
                 break
         # print("plotter move succeeded")
     
