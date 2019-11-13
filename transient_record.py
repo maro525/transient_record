@@ -1,12 +1,12 @@
 import time
-# from trend_getter import TrendGetter
+from trend_getter import TrendGetter
 from char_controller import Char_Controller
 
 
 class Transient_Record:
     def __init__(self):
         self.cc = Char_Controller()
-        # self.tg = TrendGetter()
+        self.tg = TrendGetter()
         self.resting_duration = 300
         self.round_times = 1
 
@@ -15,11 +15,13 @@ class Transient_Record:
             sentence = self.tg.get_random_word()
             starttime = time.time()
             self.cc.write_sentence(sentence, self.round_times)
-            self.plotter_move(1, 8*self.cc.written_chars)
+            # self.plotter_move(1, 8*self.cc.written_chars)
+            self.get_back_fast(1, 8*self.cc.written_chars)
             # self.sentence_check(sentence)
             duration = time.time() - starttime
             if duration < self.resting_duration:
                 time.sleep(self.resting_duration-duration)
+                print("sleep", self.resting_duration-duration)
 
     def sentence_check(self, sentence):
         # self.cc.write_sentence(sentence)
@@ -29,6 +31,10 @@ class Transient_Record:
             i += 1
         for i in range(i):
             self.plotter_move(1, 8)
+
+    def get_back_fast(dir, times):
+        for i in range(times):
+            self.cc.plotter.movefast(1)
 
     def char_check(self, c):
         # self.pomp_check(9, 1)

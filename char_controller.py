@@ -37,8 +37,11 @@ class Char_Controller:
     def write_chars(self, chars):
         for c in chars:
             self.written_chars += 1
-            if self.write_char(c) is None:
-                self.written_chars -= 1
+            self.write_char(c)
+            if self.plotter.breaknum > 4:
+                self.plotter.close()
+                self.plotter = None
+                self.plotter = Plotter_Manager()
 
     def write_char(self, c):
         print("Write Char", c)
@@ -46,7 +49,6 @@ class Char_Controller:
             array = self.char_getter.get_charArray(c)
         except:
             print("urllib error........................")
-            return None
         for i in range(8):
             print("Char:{} - Array:{}".format(c, i))
             self.plotter.move(0)

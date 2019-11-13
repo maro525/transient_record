@@ -8,6 +8,7 @@ BAUDRATE = 38400
 class Plotter_Manager:
     def __init__(self):
         self.plotter_serial = Serial_Controller(PORT_PLOTTER, BAUDRATE)
+        self.breaknum = 0
 
     def move(self, dir):
         if dir is 1:
@@ -24,8 +25,17 @@ class Plotter_Manager:
             if rep == "Done.":
                 break
             if ww > 5:
+                self.breaknum += 1
                 break
         # print("plotter move succeeded")
+    
+    def movefast(self, dir):
+        if dir is 1:
+            self.plotter_serial.send_msg(b"a.")
+        elif dir is 0:
+            self.plotter_serial.send_msg(b"b.")
+        elif dir is -1:
+            self.plotter_serial.send_msg(b"h.")
     
     def test(self, dir, times):
         for i in range(times):
