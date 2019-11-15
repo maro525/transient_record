@@ -9,6 +9,7 @@ class Char_Controller:
         self.pomp = Pomp_Manager()
         self.cc = CharCalculatior()
         self.written_chars = 0
+        self.bError = False
 
     def write_sentence(self, sentence, roundtimes):
         print("Write Sentence", sentence)
@@ -54,13 +55,15 @@ class Char_Controller:
     def write_char(self, c):
         print("Write Char", c)
         try:
-            array = self.char_getter.get_charArray(c)
+            a = self.char_getter.get_charArray(c)
         except:
             print("urllib error........................")
+            self.bError = True
+            return
         for i in range(8):
             print("Char:{} - Array:{}".format(c, i))
             self.plotter.move(0)
-            msg = self.cc.get_colum_bitdata(array, i)
+            msg = self.cc.get_colum_bitdata(a, i)
             self.pomp.handle(msg)
             self.init_new()
         print("Wrote", c)
@@ -70,11 +73,13 @@ class Char_Controller:
         try:
             array = self.char_getter.get_charArray(c)
         except:
+            self.bError = True
             print("urllib error........................")
+            return
         for i in range(p):
             print("Char:{} - Array:{}".format(c, i))
             self.plotter.move(0)
-            msg = self.cc.get_colum_bitdata(array, i)
+            msg = self.cc.get_colum_bitdata(a, i)
             self.pomp.handle(msg)
             self.init_new()
         print("Wrote", c)
