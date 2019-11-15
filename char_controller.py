@@ -71,7 +71,7 @@ class Char_Controller:
     def write_char_part(self, c, p):
         print("Write Char Part", c)
         try:
-            array = self.char_getter.get_charArray(c)
+            a = self.char_getter.get_charArray(c)
         except:
             self.bError = True
             print("urllib error........................")
