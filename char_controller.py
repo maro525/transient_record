@@ -1,5 +1,5 @@
 from util import Char_Getter
-from com_manager import Plotter_Manager, Pomp_Manager 
+from com_manager import Plotter_Manager, Pomp_Manager
 from char_calc import CharCalculatior
 
 class Char_Controller:
@@ -12,9 +12,9 @@ class Char_Controller:
 
     def write_sentence(self, sentence, roundtimes):
         print("Write Sentence", sentence)
-        self.written_chars = 0 
+        self.written_chars = 0
         if roundtimes is 1:
-            self.write_chars()
+            self.write_chars(sentence)
             return
         else:
             sentence_bit_data = self.get_array_data(sentence)
@@ -35,13 +35,21 @@ class Char_Controller:
         return sentence_bit_data
 
     def write_chars(self, chars):
-        for c in chars:
-            self.written_chars += 1
+        for ind, c in enumerate(chars):
             self.write_char(c)
-            if self.plotter.breaknum > 4:
-                self.plotter.close()
-                self.plotter = None
-                self.plotter = Plotter_Manager()
+            self.init_new()
+            if ind is 5:
+                print("this is char6. write partply")
+                self.write_char_part(c, 6, 6)
+            else:
+                self.written_chars += 1
+
+    def init_new(self):
+        if self.plotter.breaknum > 4:
+            self.plotter.close()
+            self.plotter = None
+            self.plotter = Plotter_Manager()
+            self.plotter.breaknum =0
 
     def write_char(self, c):
         print("Write Char", c)
@@ -54,10 +62,23 @@ class Char_Controller:
             self.plotter.move(0)
             msg = self.cc.get_colum_bitdata(array, i)
             self.pomp.handle(msg)
+            self.init_new()
         print("Wrote", c)
 
+    def write_char_part(self, c, p):
+        print("Write Char Part", c)
+        try:
+            array = self.char_getter.get_charArray(c)
+        except:
+            print("urllib error........................")
+        for i in range(p):
+            print("Char:{} - Array:{}".format(c, i))
+            self.plotter.move(0)
+            msg = self.cc.get_colum_bitdata(array, i)
+            self.pomp.handle(msg)
+            self.init_new()
+        print("Wrote", c)
 
     def close(self):
         self.pomp.close()
         self.plotter.close()
-

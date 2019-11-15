@@ -1,4 +1,5 @@
 from util import Serial_Controller
+import time
 
 PORT_POMP = "/dev/ttyUSB0"
 PORT_PLOTTER = "/dev/ttyACM0"
@@ -25,10 +26,10 @@ class Plotter_Manager:
             if rep == "Done.":
                 break
             if ww > 5:
-                self.breaknum += 1
+                self.breaknum += 3
                 break
         # print("plotter move succeeded")
-    
+
     def movefast(self, dir):
         if dir is 1:
             self.plotter_serial.send_msg(b"a.")
@@ -36,11 +37,13 @@ class Plotter_Manager:
             self.plotter_serial.send_msg(b"b.")
         elif dir is -1:
             self.plotter_serial.send_msg(b"h.")
-    
+
     def test(self, dir, times):
         for i in range(times):
             print("--- {} / {}".format(i, times))
             self.move(dir)
+            time.sleep(2)
+
 
     def close(self):
         self.plotter_serial.close()
@@ -74,8 +77,7 @@ class Pomp_Manager:
             for i in range(8-v):
                 msg += "0"
         self.handle(msg)
-        
+
 
     def close(self):
         self.pomp_serial.close()
-
