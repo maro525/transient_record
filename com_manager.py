@@ -10,6 +10,7 @@ class Plotter_Manager:
     def __init__(self):
         self.plotter_serial = Serial_Controller(PORT_PLOTTER, BAUDRATE)
         self.breaknum = 0
+        self.pos = 0
 
     def move(self, dir):
         if dir is 1:
@@ -24,6 +25,10 @@ class Plotter_Manager:
             ww += 1
             rep = self.plotter_serial.read_reply()
             if rep == "Done.":
+                if dir is 1:
+                    self.pos -= 1
+                elif dir is 0:
+                    self.pos += 1
                 break
             if ww > 5:
                 self.breaknum += 3

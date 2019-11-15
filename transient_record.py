@@ -20,10 +20,11 @@ class Transient_Record:
                 sentence = sentence[0:self.max_char]
             starttime = time.time()
             self.cc.write_sentence(sentence, self.round_times)
-            for i in range(self.cc.written_chars):
-                self.plotter_move(1, 8)
+            print("plotter move back")
+            # for i in range(self.cc.plotter.pos):
+            while self.cc.plotter.pos is not 0:
+                self.plotter_move(1, 1)
                 self.cc.init_new()
-            sef.plotter_move(1, 6)
             self.cc.init_new()
             print("write", sentence, "Done.")
             # self.get_back_fast(1, 8*self.cc.written_chars)
@@ -76,8 +77,8 @@ if __name__ == '__main__':
     tr.main()
     # tr.sentence_check("GOOD DAY")
     # tr.char_check("あ") # 文字チェク。 一文字かく
-    # tr.plotter_move(1, 25)
-    # tr.plotter_move(1, 36) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
+    # tr.plotter_move(1, 1)
+    # tr.plotter_move(1, 46) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
     # tr.pomp_check(1, 30) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
     # tr.all_check(2, 10)
 

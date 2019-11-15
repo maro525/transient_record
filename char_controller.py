@@ -37,13 +37,13 @@ class Char_Controller:
 
     def write_chars(self, chars):
         for ind, c in enumerate(chars):
-            self.write_char(c)
+            print("char")
             self.init_new()
             if ind is 5:
                 print("this is char6. write partply")
-                self.write_char_part(c, 6, 6)
+                self.write_char_part(c, 6)
             else:
-                self.written_chars += 1
+                self.write_char(c)
 
     def init_new(self):
         if self.plotter.breaknum > 4:
