@@ -74,11 +74,11 @@ class Transient_Record:
 if __name__ == '__main__':
     tr = Transient_Record()
 
-    # tr.main()
+    tr.main()
     # tr.sentence_check("GOOD DAY")
     # tr.char_check("あ") # 文字チェク。 一文字かく
-    tr.plotter_move(1, 40)
-    # tr.plotter_move(1, 46) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
+    # tr.plotter_move(1, 46)
+    # tr.plotter_move(1, 1) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
     # tr.pomp_check(1, 30) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
     # tr.all_check(2, 10)
 
