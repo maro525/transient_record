@@ -5,7 +5,10 @@ class CharCalculatior:
         self.bitlen = 8
 
     def get_colum_bitdata(self, bit_list, index):
-        msg = bit_list[index*self.bitlen: index*self.bitlen+(self.bitlen-1)]
+        s = index*self.bitlen
+        e = s + 8
+        print(s, e)
+        msg = bit_list[s:e]
         return msg
 
     def get_move_data(self, sentence_bit_data, roundtimes):

@@ -60,6 +60,7 @@ class Pomp_Manager:
 
     def handle(self, msg):
         msg = msg[::-1]
+        msg = self.demo3(msg)
         msg = msg + "n"
         msg = msg.encode()
         self.pomp_serial.send_msg(msg)
@@ -67,6 +68,25 @@ class Pomp_Manager:
             rep = self.pomp_serial.read_reply()
             if rep == "Done.":
                 break
+
+    def demo3(self, s):
+        # print(s)
+        v = ""
+        tmp1 = s[5]
+        tmp2 = s[6]
+        tmp3 = s[7]
+        for i in range(len(s)):
+            if i is 5:
+                v += tmp3
+            elif i is 6:
+                v += tmp2
+            elif i is 7:
+                v += tmp1
+            else:
+                v += s[i]
+        print(s, "->", v)
+        return v
+
 
 
     def test(self, v):

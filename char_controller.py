@@ -56,6 +56,7 @@ class Char_Controller:
         print("Write Char", c)
         try:
             a = self.char_getter.get_charArray(c)
+            print(a)
         except:
             print("urllib error........................")
             self.bError = True
