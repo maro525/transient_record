@@ -13,7 +13,8 @@ class Transient_Record:
 
     def main(self):
         while True:
-            sentence = self.tg.get_random_word()
+            # sentence = self.tg.get_random_word()
+            sentence = self.tg.get_random_word_demo()
             if len(sentence) > self.max_char:
                 print(sentence, end="")
                 print(" is too long")

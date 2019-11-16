@@ -20,6 +20,8 @@ class TrendGetter:
 
         self.p = re.compile('[0-9a-zA-Zあ-んー\u30A1-\u30F4]+')
         self.pytrends = TrendReq(hl='ja-JP', tz=360)
+        self.trend_words = ['レコードたい', 'にいがた', 'みずのみき', 'たにぐちゆきひろ', 'ポケモン', 'アナとゆきの', 'やまのてせん', 'ワンパチ', 'いながきけいた', 'いきなりステーキ', 'ハンセンびょう', 'おかむらたかし', 'あさひなお', 'ブラックフライデー', 'りんごちゃん']
+        self.demo_index = 0
 
     def get_words(self):
         trends = self.pytrends.trending_searches(pn='japan')
@@ -48,6 +50,12 @@ class TrendGetter:
                 trendList.append(ans)
         return trendList
 
+    def get_random_word_demo(self):
+        tw = self.trend_words[self.demo_index]
+        self.demo_index += 1
+        if demo_index >= len(self.trend_words):
+            self.demo_index = 0
+        return tw
 
     def get_random_word(self):
         trends = self.get_words()
