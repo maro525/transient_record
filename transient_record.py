@@ -7,7 +7,7 @@ class Transient_Record:
     def __init__(self):
         self.cc = Char_Controller()
         self.tg = TrendGetter()
-        self.resting_duration = 480
+        self.resting_duration = 300
         self.round_times = 1
         self.max_char = 6
 
@@ -75,12 +75,12 @@ class Transient_Record:
 if __name__ == '__main__':
     tr = Transient_Record()
 
-    tr.main()
+    # tr.main()
     # tr.sentence_check("GOOD DAY")
     # tr.char_check("い") # 文字チェク。 一文字かく
     # tr.plotter_move(1, 46)
     # tr.plotter_move(1, 1) # 例 : (1,8)と設定したら、正転×8. (0,8)と設定したら、逆転×8
-    # tr.pomp_check(2, 1) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
+    tr.pomp_check(9, 1000) # n番目のポンプをON 。 0にしたときは全部OFF 9は全部ON, それを×n回
     # tr.all_check(2, 10)
 
     # for i in range(50):
